@@ -2,6 +2,7 @@
 pragma solidity 0.8.15;
 
 contract MultiSigWallet {
+
     event Submission(uint indexed transactionId);
     event Confirmation(address indexed sender, uint indexed transactionId);
     event Execution(uint indexed transactionId);
@@ -52,6 +53,7 @@ contract MultiSigWallet {
         require(transactions[transactionId].executed == false, "Transaction has already been executed");
         require(confirmations[transactionId][msg.sender] == false,"ERR:AV");//AV => Already Voted
         confirmations[transactionId][msg.sender] = true;
+        transactions[transactionId].voted++;
         emit Confirmation(msg.sender, transactionId);
     }
 

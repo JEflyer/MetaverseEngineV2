@@ -10,14 +10,21 @@ contract StatsContract {
     mapping (address => mapping(uint256 => Stats)) public stats;
 
     address public signatureVerifier;
+    address private deployer;
 
-    constructor(address sigVerifier){
-        signatureVerifier = sigVerifier;
+    constructor(){
+        deployer = msg.sender;
     }
 
     modifier onlyVerfier{
         require(msg.sender == signatureVerifier,"ERR:NV");//NV => Not Verifier
         _;
+    }
+
+    function init(address sigVerifier) external {
+        require(msg.sender == deployer,"ERR:ND");//ND => Not Deployer
+        require(signatureVerifier == address(0),"ERR:AS");//AS => Already Set
+        signatureVerifier = sigVerifier;
     }
 
     function incrementWins(uint256 tokenID, address minter) external onlyVerfier {
