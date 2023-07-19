@@ -1,7 +1,7 @@
 const { ethers } = require('ethers');
 const verifyABI = require("../artifacts/contracts/ecdsaverificationcontract.sol/ECDSAVerificationContract.json").abi
 
-const contractAddress = '0x4ed7c70F96B99c776995fB64377f0d4aB3B0e1C1'; // Replace with the ECDSA verification contract address
+const verifierContractAddress = '0x4ed7c70F96B99c776995fB64377f0d4aB3B0e1C1'; // Replace with the ECDSA verification contract address
 
 
 // Provider and Signer
@@ -10,7 +10,7 @@ const privateKey = '0xde9be858da4a475276426320d5e9262ecfc3ba460bfac56360bfa6c4c2
 const wallet = new ethers.Wallet(privateKey, provider);
 
 // Contract instance
-const contract = new ethers.Contract(contractAddress, verifyABI, wallet);
+const contract = new ethers.Contract(verifierContractAddress, verifyABI, wallet);
 
 // Function inputs
 const privateKey1 = '0x59c6995e998f97a5a0044966f0945389dc9e86dae88c7a8412f4603b6b78690d'; // Replace with the private key of the first player
