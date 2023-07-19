@@ -45,7 +45,7 @@ async function start() {
     const stats = await statsFactory.deploy()
     await stats.deployed()
 
-    const verify = await verifyFactory.deploy(stats.address)
+    const verify = await verifyFactory.deploy(stats.address, management.address)
     await verify.deployed()
 
     let tx1 = await stats.init(verify.address)

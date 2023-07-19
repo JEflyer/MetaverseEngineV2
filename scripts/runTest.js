@@ -1,7 +1,7 @@
 const { ethers } = require('ethers');
 const verifyABI = require("../artifacts/contracts/ecdsaverificationcontract.sol/ECDSAVerificationContract.json").abi
 
-const contractAddress = '0x0E801D84Fa97b50751Dbf25036d067dCf18858bF'; // Replace with the ECDSA verification contract address
+const contractAddress = '0x4ed7c70F96B99c776995fB64377f0d4aB3B0e1C1'; // Replace with the ECDSA verification contract address
 
 
 // Provider and Signer
@@ -18,7 +18,7 @@ const privateKey2 = '0x5de4111afa1a4b94908f83103eb1f1706367c2e68ca870fc3fb9a804c
 const wallet1 = new ethers.Wallet(privateKey1, provider);
 const wallet2 = new ethers.Wallet(privateKey2, provider);
 const tokenIDs = ['1', '2']; // Replace with actual token IDs
-const minters = ['0x9d4454B023096f34B160D6B654540c56A1F81688', '0x9d4454B023096f34B160D6B654540c56A1F81688']; // Replace with actual minter addresses
+const minters = ['0xa85233C63b9Ee964Add6F2cffe00Fd84eb32338f', '0xa85233C63b9Ee964Add6F2cffe00Fd84eb32338f']; // Replace with actual minter addresses
 const players = [wallet1.address, wallet2.address]; // Replace with actual player addresses
 
 // Generate the signatures
@@ -29,11 +29,11 @@ async function generateSignatures() {
         const nonce = await contract.getNonce(players[0], players[1]);
 
         const firstHashedMessage = ethers.utils.solidityKeccak256(
-            ['uint256[2]', 'address[2]', 'uint256', 'bool'], [tokenIDs, minters, nonce, false]
+            ['uint256[2]', 'address[2]', 'address[2]', 'uint256', 'bool'], [tokenIDs, minters, players, nonce, false]
         );
 
         const secondHashedMessage = ethers.utils.solidityKeccak256(
-            ['uint256[2]', 'address[2]', 'uint256', 'bool'], [tokenIDs, minters, nonce, true]
+            ['uint256[2]', 'address[2]', 'address[2]', 'uint256', 'bool'], [tokenIDs, minters, players, nonce, true]
         );
 
         const firstSignature = await wallet1.signMessage(ethers.utils.arrayify(firstHashedMessage));
