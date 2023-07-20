@@ -17,4 +17,7 @@ contract TestNFTContract is ERC721, Ownable {
         _mint(to, tokenId);
     }
 
+    function tokenURI(uint256 tokenID) public view override returns(string memory){
+        return "https://ipfs.io/ipfs/bafybeicngeq7voxzve3ultbxfay6erabwpxnt6ix6p6e6d3uejenefr45a/10.json";
+    }
 }
